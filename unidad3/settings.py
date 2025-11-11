@@ -22,6 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-sz4v&jtqekixh$$97^)c^65+*586&zc**vq8gb!i2_mt+da)n)'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -41,7 +42,16 @@ INSTALLED_APPS = [
     'usuarios.apps.UsuariosConfig',
     'blog',
     'galeria',
+    'rest_framework',
+    'carrito',
+    
+   
 ]
+
+# settings.py
+TRANSBANK_COMMERCE_CODE = '597055555532'
+TRANSBANK_API_KEY = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',#Middleware de seguridad

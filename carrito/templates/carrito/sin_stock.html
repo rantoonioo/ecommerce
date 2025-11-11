@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="alert alert-danger mt-3" role="alert">
+        Lo sentimos, el producto que intentaste agregar al carrito ya no está disponible por falta de stock.
+    </div>
+    <a href="{% url 'blog:lista_articulos' %}" class="btn btn-cartoon ">Volver a los productos</a>
+{% endblock %}

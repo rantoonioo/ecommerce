@@ -1,0 +1,120 @@
+<!-- perfil.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Perfil Profesional{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Perfil</h1>
+
+    <!-- Información del usuario -->
+    <div class="row">
+        <div class="profile-header d-flex align-items my-4">
+            <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="img-thumbnail me-3">
+            <div>
+                <h1>{{ request.user.username }}</h1>
+
+            </div>
+            <div>
+                {% if request.user.is_authenticated %}
+                {% if request.user.perfil.rol == 'editor' or request.user.perfil.rol == 'administrador' %}
+                <div class="text-end">
+                    <a href="{% url 'blog:crear_articulo' %}" class="btn btn-success mb-3 ">Editar Perfil </a>
+                </div>
+                <div class="text-end">
+                    <a href="{% url 'blog:crear_articulo' %}" class="btn btn-success mb-3 ">Crear Artículo </a>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="shadow-lg p-3 mb-5 bg-white text-white rounded">
+        <h1 style="color: black; text-align: center;">Mis Pedidos</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>  <!-- Nueva columna para cantidad -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pedidos_con_productos %}
+                <tr>
+                    <td>{{ item.pedido.id }}</td>
+                    <td>{{ item.pedido.fecha }}</td>
+                    <td>${{ item.pedido.total }}</td>
+                    <td>{{ item.pedido.estado }}</td>
+                    <td>
+                        <ul>
+                            {% for producto in item.productos %}
+                                <li>{{ producto.titulo }}</li>  <!-- Nombre del producto -->
+                            {% empty %}
+                                <li>Este producto ya no existe</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {% for producto in item.productos %}
+                                <li>{{ producto.cantidad }}</li>  <!-- Cantidad del producto -->
+                            {% empty %}
+                                <li>Este producto ya no existe.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+
+
+
+    <div class="shadow-lg p-3 mb-5  text-white rounded">
+        <h1>Mis Articulos</h1>
+        <div class="cards">
+            {% for articulo in articulos %}
+            <div class="cards_item">
+                <div class="card">
+                    <div class="card_image">
+                        {% if articulo.imagen %}
+                        <img src="{{ articulo.imagen.url }}" alt="Imagen de artículo">
+                        {% endif %}
+                    </div>
+                    <div class="card_content">
+                        <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded sombra">
+                            <h2 class="card_title ">{{ articulo.titulo }} </h2>
+                        </div>
+                        <h2 class="card_title"> $ {{ articulo.precio }} </h2>
+                        <p class="card_text">Stock disponible {{ articulo.contenido|truncatechars:100 }}</p>
+
+                        <div class="button-container">
+                            <a href="{% url 'blog:detalle_articulo' articulo.pk %}" class="custom-btn btn-16"
+                                style="color: white;">Descripción</a>
+
+                            <a href="{% url 'carrito:agregar_al_carrito' articulo.id %}"
+                                class="custom-btn btn-16 fas fa-shopping-cart me-2" style="color: white;"><a href=""
+                                    style="color: white;">
+                                </a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No hay artículos disponibles.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

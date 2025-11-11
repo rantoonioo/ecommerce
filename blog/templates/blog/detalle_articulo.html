@@ -1,18 +1,67 @@
+<style>
+    .img {
+        width: 300px;
+    }
+</style>
 {% extends 'base.html' %}
 
 {% block title %}{{ articulo.titulo }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>{{ articulo.titulo }}</h2>
-    <p><small class="text-muted">Publicado por {{ articulo.autor.username }} el {{ articulo.fecha_publicacion|date:"d/m/Y H:i" }}</small></p>
-    <hr>
-    <p>{{ articulo.contenido }}</p>
+<h4 style="text-align: center;">Descripción:</h4>
+<br>
+<div class="row d-flex justify-content-center">
 
-    {% if request.user.is_authenticated and request.user == articulo.autor or request.user.perfil.rol == 'administrador' %}
-        <a href="{% url 'blog:editar_articulo' articulo.pk %}" class="btn btn-secondary">Editar Artículo</a>
-    {% endif %}
+    <div class="col-5">
+        <div class="cards_item">
+            <div class="card" style="width: 20rem">
+                <div class="card_image im">
+                    {% if articulo.imagen %}
+                    <img src="{{ articulo.imagen.url }}" alt="Imagen de artículo">
+                    {% endif %}
+                </div>
+                <div class="card_content">
+                    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded sombra">
+                        <h2 class="card_title ">{{ articulo.titulo }} </h2>
+                    </div>
+                    <h2 class="card_title"> $ {{ articulo.precio }} </h2>
+                    <p class="card_text">Stock disponible {{ articulo.stock }}</p>
 
-    <a href="{% url 'blog:lista_articulos' %}" class="btn btn-link mt-3">Volver a la Lista de Artículos</a>
+                    <div class="d-flex justify-content-center">
+
+                        <a href="{% url 'carrito:agregar_al_carrito' articulo.id %}" class="custom-btn btn-16"
+                            style="color: white;">
+                            <div class="fas fa-shopping-cart me-2"></div>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <br><br><br><br>
+        <p>{{ articulo.descripcion }}</p>
+    </div>
+</div>
+
+
+
+
+
+{% if request.user.is_authenticated and request.user == articulo.autor or request.user.perfil.rol == 'administrador' %}
+<form method="post" action="{% url 'blog:eliminar_articulo' articulo.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger mt-3"
+        onclick="return confirm('¿Estás seguro de eliminar este artículo?');">Eliminar Artículo</button>
+</form>
+
+<a href="{% url 'blog:editar_articulo' articulo.pk %}" class="btn btn-secondary mt-3">Editar Artículo</a>
+<a href="{% url 'blog:lista_articulos' %}" class="btn btn-danger mt-3">Volver a la Lista de Artículos</a>
+{% endif %}
+
+</div>
 </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+# usuario/views.py
 from django.shortcuts import render
 
 # Create your views here.
@@ -7,6 +8,19 @@ from .forms import RegistroForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Perfil
+from blog.models import Articulo
+from carrito.models import Pedido
+from carrito.models import ProductoPedido
+
+def indexPro(request):
+    # Obtener 3 productos aleatorios
+    articulos_aleatorios = Articulo.objects.all().order_by('?')[:2]
+
+    context = {
+        'articulos': articulos_aleatorios,
+    }
+
+    return render(request, 'index.html', context)
 
 def registro(request):
     if request.method == 'POST':
@@ -40,3 +54,22 @@ def login_view(request):#Vista para el inicio de sesión
 def logout_view(request):
     logout(request)
     return redirect('usuarios:login')
+
+@login_required
+def perfil(request):
+    pedidos = Pedido.objects.filter(usuario=request.user).order_by('-fecha')  # Obtener pedidos del usuario
+    pedidos_con_productos = []
+    for pedido in pedidos:
+        productos = []
+        for producto_pedido in pedido.productopedido_set.all():
+            productos.append({
+                'titulo': producto_pedido.producto.titulo,
+                'cantidad': producto_pedido.cantidad,
+            })
+        pedidos_con_productos.append({'pedido': pedido, 'productos': productos})
+    
+    return render(request, 'usuarios/perfil.html', {'pedidos_con_productos': pedidos_con_productos})
+
+
+
+

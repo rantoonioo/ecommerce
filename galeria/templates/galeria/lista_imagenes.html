@@ -1,23 +1,21 @@
+<!--Lista imagenes-->
 {% extends 'base.html' %}
 
 {% block title %}Galería{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <h2>Galería de Imágenes</h2>
     {% if request.user.is_authenticated and request.user.perfil.rol == 'editor' or request.user.perfil.rol == 'administrador' %}
-        <a href="{% url 'galeria:subir_imagen' %}" class="btn btn-success mb-3">Subir Imagen</a>
+        <a href="{% url 'galeria:subir_imagen' %}" class="btn btn-cartoon mb-3">Subir Imagen</a>
     {% endif %}
     <div class="row">
         {% for imagen in imagenes %}
-            <div class="col-md-4">
-                <div class="card mb-3">
+            <div class="size">
+                <div class="mb-3">
                     <img src="{{ imagen.imagen.url }}" class="card-img-top" alt="{{ imagen.titulo }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ imagen.titulo }}</h5>
-                        <a href="{% url 'galeria:detalle_imagen' imagen.pk %}" class="btn btn-primary">Ver Detalle</a>
-                    </div>
                 </div>
+                <a href="{% url 'galeria:detalle_imagen' imagen.pk %}" class="btn btn-cartoon">Ver Detalle</a>
             </div>
         {% endfor %}
     </div>

@@ -3,20 +3,23 @@
 {% block title %}{{ imagen.titulo }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="containe sizedetalles">
     <h2>{{ imagen.titulo }}</h2>
-    <p><small class="text-muted">Subida por {{ imagen.autor.username }} el {{ imagen.fecha_subida|date:"d/m/Y H:i" }}</small></p>
     <hr>
     <img src="{{ imagen.imagen.url }}" class="img-fluid mb-4" alt="{{ imagen.titulo }}">
-    <p>{{ imagen.descripcion }}</p>
+  
+    
+</div>
+
+<div>
     {% if request.user.is_authenticated and request.user == imagen.autor or request.user.perfil.rol == 'administrador' %}
-        <a href="{% url 'galeria:editar_imagen' imagen.pk %}" class="btn btn-secondary">Editar Imagen</a>
-        <form action="{% url 'galeria:eliminar_imagen' imagen.pk %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Eliminar Imagen</button>
-        </form>
+    <a href="{% url 'galeria:editar_imagen' imagen.pk %}" class="btn btn-secondary">Editar Imagen</a>
+    <form action="{% url 'galeria:eliminar_imagen' imagen.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar Imagen</button>
+    </form>
     {% endif %}
 
-    <a href="{% url 'galeria:lista_imagenes' %}" class="btn btn-link mt-3">Volver a la Galería</a>
+    <a href="{% url 'galeria:lista_imagenes' %}" class="btn btn-cartoon">Volver a la Galería</a>
 </div>
 {% endblock %}

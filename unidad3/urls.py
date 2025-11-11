@@ -24,7 +24,13 @@ urlpatterns = [
     path('', include('usuarios.urls', namespace='usuarios')),  # Rutas de autenticación
     path('blog/', include('blog.urls', namespace='blog')),
     path('galeria/', include('galeria.urls', namespace='galeria')),
+    path('carrito/', include('carrito.urls', namespace='carrito')),  # Incluir las URLs del carrito
+    
+   
+   
 ]
+    
+
 
 #Agregamos la ruta para que Django pueda encontrar los archivos multimedia
 if settings.DEBUG:

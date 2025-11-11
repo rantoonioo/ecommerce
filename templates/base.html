@@ -1,82 +1,407 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Mi Sitio Completo{% endblock %}</title>
-    {% load static %}
     <!-- CSS de Bootstrap desde CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <!-- Tu archivo de estilos CSS -->
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+        /* Estilo general tipo cartoon */
+
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            /* Asegura que ocupe toda la altura de la ventana */
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .navbar {
+            background-color: #ffcc33;
+            border-bottom: 4px solid #ff9933;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #333 !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333 !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #ffdd66;
+            border-radius: 10px;
+        }
+
+        /* Botones tipo cartoon */
+        .btn-cartoon {
+            background-color: #ff9933;
+            color: white;
+            font-weight: bold;
+            border: 2px solid #cc6600;
+            border-radius: 15px;
+            transition: 0.3s ease;
+        }
+
+        .btn-cartoon:hover {
+            background-color: #ffcc33;
+            color: #333;
+            border-color: #ff9933;
+            transform: scale(1.05);
+        }
+
+
+
+
+        /* Jumbotron */
+        .jumbotron {
+            background-color: #fff7e6;
+            border: 3px dashed #ffcc33;
+            border-radius: 20px;
+
+        }
+
+
+
+        .btn:hover {
+            background-color: rgb(212, 13, 13);
+            transform: translateY(-5px);
+        }
+
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        .card {
+            background-color: white;
+            /* Fondo color amarillo anaranjado */
+            border: 5px solid #930808e8;
+            /* Borde más grueso y oscuro */
+            border-radius: 12px;
+            /* Bordes más redondeados */
+            box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.2), 0 8px 15px -5px rgba(0, 0, 0, 0.1);
+            /* Sombras más suaves */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
+            width: 300px;
+            /* Ancho fijo para todas las tarjetas */
+            height: 500px;
+            /* Altura fija para todas las tarjetas */
+            margin: 0 auto;
+        }
+
+        .card2 {
+            background-color: white;
+            border: 5px solid #930808e8;
+            border-radius: 12px;
+            box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.2), 0 8px 15px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            text-align: center;
+            /* Cambié el text-align a 'center' para mejorar el alineado */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
+            width: 130%;
+            /* Hago que la tarjeta ocupe todo el ancho disponible */
+            height: 200px;
+            /* Ajusta la altura según lo necesario */
+            margin: 0 auto;
+            /* Centra las tarjetas */
+        }
+
+        .col-md-4 {
+            margin-bottom: 100px;
+            margin-right: 190px;
+    
+            /* Espacio a la derecha */
+            /* Espacio debajo de cada tarjeta */
+        }
+
+        .size{
+            width: 190px;
+            margin-right: 100px;
+        }
+
+        .sizedetalles{
+            width: 300px;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Asegura que los elementos estén distribuidos */
+            height: 100%;
+            /* Asegura que ocupe todo el espacio de la tarjeta */
+        }
+
+        .card_image2 {
+            width: 50%;
+            height: 220px;
+            /* Ajusta según el tamaño que deseas para la imagen */
+            overflow: hidden;
+        }
+
+        .card_content {
+            padding: 16px;
+            background: linear-gradient(to bottom left, #ff7f00 40%, #ff5500 100%);
+            color: #fff;
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card_title {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .card_text {
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .card_image {
+            width: 100%;
+            height: 200px;
+            /* Ajusta según el tamaño que deseas para la imagen */
+            overflow: hidden;
+        }
+
+        .card_image img {
+            width: 100%;
+            /* Hace que la imagen ocupe todo el ancho del contenedor */
+            height: 100%;
+            /* Asegura que la imagen ocupe toda la altura del contenedor */
+            object-fit: cover;
+            /* Asegura que la imagen cubra el área sin distorsionarse */
+            transition: transform 0.3s ease;
+        }
+
+        .card_image img:hover {
+            transform: scale(1.1);
+            /* Efecto de zoom cuando se pasa el mouse por encima */
+        }
+
+        .made_by {
+            font-weight: 400;
+            font-size: 13px;
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        .card_btn {
+            display: inline-block;
+            width: 50%;
+            padding: 10px 10px;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        .card_btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .btn-16 {
+            border: none;
+            color: #000;
+        }
+
+        .btn-16:after {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            direction: rtl;
+            z-index: -1;
+            box-shadow:
+                -7px -7px 20px 0px #fff9,
+                -4px -4px 5px 0px #fff9,
+                7px 7px 20px 0px #0002,
+                4px 4px 5px 0px #0001;
+            transition: all 0.3s ease;
+        }
+
+        .btn-16:hover {
+            color: #000;
+        }
+
+        .btn-16:hover:after {
+            left: auto;
+            right: 0;
+            width: 100%;
+        }
+
+        .btn-16:active {
+            top: 2px;
+        }
+
+        button {
+            margin: 20px;
+        }
+
+        .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 10px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                7px 7px 20px 0px rgba(0, 0, 0, .1),
+                4px 4px 5px 0px rgba(0, 0, 0, .1);
+            outline: none;
+        }
+
+        .bodycolor {
+            background-image: url("{% static 'imagen/' %}");
+            background-color: #ffcc33;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+        }
+    </style>
+
 </head>
-<body>
+
+<body class="bodycolor">
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'usuarios:login' %}">Mi Sitio Completo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">E-commerce Cartoon</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContenido"
+                aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarContenido">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'blog:lista_articulos' %}">Blog</a>
+                        <a class="nav-link" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:lista_articulos' %}">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'galeria:lista_imagenes' %}">Galería</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'carrito:ver_carrito' %}">
+                            <i class="fas fa-shopping-cart me-2" style="font-size: 20px;"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center"
+                            href="https://wa.me/+56990335827?text=Hola!%20Quiero%20hablar%20contigo"
+                            target="_blank">¿Tienes dudas? Contactanos
+                        </a>
+                    </li>
+
                 </ul>
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ user.username }}
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                {% if user.perfil.rol == 'administrador' %}
-                                    <a class="dropdown-item" href="{% url 'admin:index' %}">Panel de Administración</a>
-                                {% endif %}
-                                <a class="dropdown-item" href="#">Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a>
-                            </div>
-                        </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            {% if user.perfil.rol == 'administrador' %}
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">Panel de Administración</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="/perfil">Perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a>
+                        </div>
+                    </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'usuarios:registro' %}">Registrarse</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'usuarios:registro' %}">Registrarse</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
+
+
     <!-- Contenido principal -->
-    <div class="container mt-4">
+    <div class="container-fluid custom-container">
         {% block content %}
         {% endblock %}
     </div>
-
     <!-- Pie de página -->
-    <footer class="bg-dark text-white mt-4">
-        <div class="container text-center py-3">
-            &copy; 2024 Mi Sitio Completo. Todos los derechos reservados.
-        </div>
-    </footer>
 
     <!-- JavaScript de Bootstrap desde CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js">
-    </script>
-    <script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
     </script>
     <!-- Tu archivo de scripts JS -->
     <script src="{% static 'js/scripts.js' %}"></script>
 </body>
+
 </html>

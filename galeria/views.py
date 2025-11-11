@@ -4,10 +4,12 @@ from .models import Imagen
 from .forms import ImagenForm
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def lista_imagenes(request):
     imagenes = Imagen.objects.all().order_by('-fecha_subida')
     return render(request, 'galeria/lista_imagenes.html', {'imagenes': imagenes})
 
+@login_required
 def detalle_imagen(request, pk):
     imagen = get_object_or_404(Imagen, pk=pk)
     return render(request, 'galeria/detalle_imagen.html', {'imagen': imagen,'request':request})

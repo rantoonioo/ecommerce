@@ -1,26 +1,66 @@
+
+<style>
+    .sombra {
+        border: 2px solid #6c757d;
+        /* Color del borde */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        /* Sombra con desplazamiento */
+        padding: 10px;
+        /* Espaciado interno si lo necesitas */
+        border-radius: 5px;
+        /* Esquinas redondeadas si lo deseas */
+    }
+</style>
 {% extends 'base.html' %}
 
 {% block title %}Artículos{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <h2>Lista de Artículos</h2>
+
+    <!-- Botón para crear artículos (si el usuario tiene permisos) -->
     {% if request.user.is_authenticated %}
-        {% if request.user.perfil.rol == 'editor' or request.user.perfil.rol == 'administrador' %}
-            <a href="{% url 'blog:crear_articulo' %}" class="btn btn-success mb-3">Crear Artículo </a>
-        {% endif %}
+    {% if request.user.perfil.rol == 'editor' or request.user.perfil.rol == 'administrador' %}
+    <a href="{% url 'blog:crear_articulo' %}" class="btn btn-cartoon mb-3">Crear Artículo</a>
     {% endif %}
-    {% for articulo in articulos %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ articulo.titulo }}</h5>
-                <p class="card-text">{{ articulo.contenido|truncatechars:100 }}</p>
-                <a href="{% url 'blog:detalle_articulo' articulo.pk %}" class="btn btn-primary">Leer más</a>
+    {% endif %}
+  
+    <!-- Lista de artículos -->
+    <div class="cards">
+        {% if articulos %}
+        {% for articulo in articulos %}
+        <div class="cards_item">
+            <div class="card">
+                <div class="card_image">
+                    {% if articulo.imagen %}
+                    <img src="{{ articulo.imagen.url }}" alt="Imagen de artículo">
+                    {% endif %}
+                </div>
+                <div class="card_content">
+                    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded sombra">
+                        <h2 class="card_title ">{{ articulo.titulo }} </h2>
+                    </div>
+                    <h2 class="card_title"> $ {{ articulo.precio }} </h2>
+                    <p class="card_text">Stock disponible {{ articulo.stock }}</p>
+                    <div class="button-container">
+                        <a href="{% url 'blog:detalle_articulo' articulo.pk %}" class="custom-btn btn-16"
+                            style="color: white;">Descripción</a>
+                        <a href="{% url 'carrito:agregar_al_carrito' articulo.id %}"
+                            class="custom-btn " style="color: white;"><div class="fas fa-shopping-cart me-2"></div>
+
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    {% empty %}
-        <p>No hay artículos disponibles.</p>
-    {% endfor %}
-    {{ request.user.perfil.rol }}
+        {% endfor %}
+        {% else %}
+        <p>No se encontraron artículos</p>
+        
+        {% endif %}
+    </div>
 </div>
+
 {% endblock %}
+

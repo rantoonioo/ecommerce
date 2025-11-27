@@ -126,8 +126,8 @@ def payment_view(request):
                 "description": "Pago por productos en el carrito",
             }],
             "redirect_urls": {
-                "return_url": "http://localhost:8000/carrito/success/",
-                "cancel_url": "http://localhost:8000/carrito/cancel/",
+                "return_url": "http://52.15.203.101/carrito/success/",
+                "cancel_url": "http://52.15.203.101/carrito/cancel/",
             },
         })
 
